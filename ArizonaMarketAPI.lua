@@ -143,7 +143,10 @@ local function install()
 
 	-- Сам установщик устарел — сперва обновляем его и перезапускаемся.
 	if man.entry and man.entry.version and man.entry.version ~= VERSION then
-		local body = getChecked(RAW .. man.entry.path, man.entry.size)
+		-- ⚠ МЕТКА ВЕРСИИ В АДРЕСЕ: CDN GitHub до пяти минут отдаёт прежний файл,
+		-- и новая опись с его размером не сошлась бы — установка падала бы до
+		-- истечения кэша. Адрес с версией у каждого выпуска свой.
+		local body = getChecked(RAW .. man.entry.path .. '?v=' .. man.entry.version, man.entry.size)
 		local me = thisScript().path
 		if body and place(me, body) then
 			say(('обновление до %s — перезапускаюсь'):format(man.entry.version), COL_GOOD)
@@ -160,7 +163,7 @@ local function install()
 	for _, f in ipairs(man.files) do
 		local dest = ML .. '\\' .. f.dest:gsub('/', '\\')
 		if have.version ~= man.version or not exists(dest) then
-			local body = getChecked(RAW .. f.path, f.size)
+			local body = getChecked(RAW .. f.path .. '?v=' .. tostring(man.version), f.size)
 			if not body then return false, 'не скачался ' .. f.path end
 			if not place(dest, body) then return false, 'не записался ' .. dest end
 			fresh = fresh + 1
