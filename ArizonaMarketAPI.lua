@@ -134,19 +134,25 @@ local function getChecked(url, size)
 end
 
 local function install()
-	-- Опись свежая, а не из кэша Windows: адрес с меткой времени.
-	local raw = fetch(RAW .. 'manifest.json?t=' .. os.time())
+	-- Опись берётся с `main`, и CDN GitHub может отдать её до пяти минут старой
+	-- (`max-age=300`, метку в адресе он не учитывает — измерено 13.09.2026).
+	-- Это не страшно: файлы качаются по КОММИТУ, который назван в самой описи.
+	local raw = fetch(RAW .. 'manifest.json')
 	local ok, man = pcall(decodeJson, raw or '')
 	if not ok or type(man) ~= 'table' or type(man.files) ~= 'table' then
 		return false, 'нет связи с GitHub'
 	end
 
+	-- ⚠ АДРЕС ПО КОММИТУ, А НЕ ПО `main`. По `main` CDN отдавал старый файл под
+	-- новой описью, размер не сходился, и установка падала до истечения кэша.
+	-- Адрес с хешем коммита неизменен: опись и файлы в нём — один снимок.
+	local function at(p)
+		return 'https://raw.githubusercontent.com/' .. REPO .. '/' .. tostring(man.ref or 'main') .. '/' .. p
+	end
+
 	-- Сам установщик устарел — сперва обновляем его и перезапускаемся.
 	if man.entry and man.entry.version and man.entry.version ~= VERSION then
-		-- ⚠ МЕТКА ВЕРСИИ В АДРЕСЕ: CDN GitHub до пяти минут отдаёт прежний файл,
-		-- и новая опись с его размером не сошлась бы — установка падала бы до
-		-- истечения кэша. Адрес с версией у каждого выпуска свой.
-		local body = getChecked(RAW .. man.entry.path .. '?v=' .. man.entry.version, man.entry.size)
+		local body = getChecked(at(man.entry.path), man.entry.size)
 		local me = thisScript().path
 		if body and place(me, body) then
 			say(('обновление до %s — перезапускаюсь'):format(man.entry.version), COL_GOOD)
@@ -163,7 +169,7 @@ local function install()
 	for _, f in ipairs(man.files) do
 		local dest = ML .. '\\' .. f.dest:gsub('/', '\\')
 		if have.version ~= man.version or not exists(dest) then
-			local body = getChecked(RAW .. f.path .. '?v=' .. tostring(man.version), f.size)
+			local body = getChecked(at(f.path), f.size)
 			if not body then return false, 'не скачался ' .. f.path end
 			if not place(dest, body) then return false, 'не записался ' .. dest end
 			fresh = fresh + 1
