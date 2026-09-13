@@ -4,7 +4,7 @@
   "entry": {
     "path": "ArizonaMarketAPI.lua",
     "version": "1.0.0",
-    "size": 14088
+    "size": 14421
   },
   "files": [
     {
@@ -80,5 +80,6 @@
         }
       ]
     }
-  ]
+  ],
+  "ref": "a8ce863866eefc0d10a5bab89d7074825632fc7a"
 }
