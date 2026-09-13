@@ -1,0 +1,84 @@
+{
+  "version": "368292b606",
+  "site": "https://arizonamarket.fun",
+  "entry": {
+    "path": "ArizonaMarketAPI.lua",
+    "version": "1.0.0",
+    "size": 13666
+  },
+  "files": [
+    {
+      "path": "ArizonaMarketAPI/core/paths.lua",
+      "dest": "ArizonaMarketAPI/core/paths.lua",
+      "size": 9735
+    },
+    {
+      "path": "ArizonaMarketAPI/net/outbox.lua",
+      "dest": "ArizonaMarketAPI/net/outbox.lua",
+      "size": 16789
+    },
+    {
+      "path": "ArizonaMarketAPI/net/wire.lua",
+      "dest": "ArizonaMarketAPI/net/wire.lua",
+      "size": 10308
+    },
+    {
+      "path": "ArizonaMarketAPI/net/uplink.lua",
+      "dest": "ArizonaMarketAPI/net/uplink.lua",
+      "size": 34947
+    },
+    {
+      "path": "ArizonaMarketAPI/market/sendtext.lua",
+      "dest": "ArizonaMarketAPI/market/sendtext.lua",
+      "size": 1933
+    },
+    {
+      "path": "ArizonaMarketAPI/market/cefbag.lua",
+      "dest": "ArizonaMarketAPI/market/cefbag.lua",
+      "size": 13808
+    },
+    {
+      "path": "ArizonaMarketAPI/market/bagcount.lua",
+      "dest": "ArizonaMarketAPI/market/bagcount.lua",
+      "size": 2417
+    },
+    {
+      "path": "ArizonaMarketAPI/market/bag.lua",
+      "dest": "ArizonaMarketAPI/market/bag.lua",
+      "size": 14811
+    }
+  ],
+  "vendor": [
+    {
+      "name": "arizona-events",
+      "check": "lib/arizona-events/init.lua",
+      "files": [
+        {
+          "url": "https://raw.githubusercontent.com/wojciech941/arizona-events/0a80c519ccfbcd46ea5b17be2d128d8221ce0966/arizona-events/init.lua",
+          "dest": "lib/arizona-events/init.lua",
+          "size": 11749
+        },
+        {
+          "url": "https://raw.githubusercontent.com/wojciech941/arizona-events/0a80c519ccfbcd46ea5b17be2d128d8221ce0966/arizona-events/core.lua",
+          "dest": "lib/arizona-events/core.lua",
+          "size": 5636
+        },
+        {
+          "url": "https://raw.githubusercontent.com/wojciech941/arizona-events/0a80c519ccfbcd46ea5b17be2d128d8221ce0966/arizona-events/bitstream.lua",
+          "dest": "lib/arizona-events/bitstream.lua",
+          "size": 6057
+        },
+        {
+          "url": "https://raw.githubusercontent.com/wojciech941/arizona-events/0a80c519ccfbcd46ea5b17be2d128d8221ce0966/arizona-events/subprocess.lua",
+          "dest": "lib/arizona-events/subprocess.lua",
+          "size": 1951
+        },
+        {
+          "url": "https://raw.githubusercontent.com/wojciech941/arizona-events/0a80c519ccfbcd46ea5b17be2d128d8221ce0966/LICENSE",
+          "dest": "lib/arizona-events/LICENSE",
+          "size": 1068
+        }
+      ]
+    }
+  ]
+}
